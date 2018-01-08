@@ -35,6 +35,7 @@
     <property name="title" translatable="yes">Videojuegos</property>
     <property name="default_width">250</property>
     <property name="default_height">250</property>
+    <signal name="destroy" handler="on_window1_destroy" swapped="no"/>
     <child>
       <object class="GtkBox" id="box1">
         <property name="visible">True</property>
