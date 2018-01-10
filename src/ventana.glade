@@ -18,6 +18,32 @@
       <column type="gchararray"/>
     </columns>
   </object>
+  <object class="GtkListStore" id="listadetalles">
+    <columns>
+      <!-- column-name codigo -->
+      <column type="gint"/>
+      <!-- column-name factura -->
+      <column type="gint"/>
+      <!-- column-name producto -->
+      <column type="gint"/>
+      <!-- column-name precioUnidad -->
+      <column type="gfloat"/>
+      <!-- column-name cantidad -->
+      <column type="gint"/>
+      <!-- column-name precioTotal -->
+      <column type="gfloat"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="listafacturas">
+    <columns>
+      <!-- column-name codigo -->
+      <column type="gint"/>
+      <!-- column-name cliente -->
+      <column type="gchararray"/>
+      <!-- column-name fecha -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkListStore" id="listaproductos">
     <columns>
       <!-- column-name codigo -->
@@ -32,7 +58,7 @@
   </object>
   <object class="GtkWindow" id="window1">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Videojuegos</property>
+    <property name="title" translatable="yes">Factura</property>
     <property name="default_width">250</property>
     <property name="default_height">250</property>
     <signal name="destroy" handler="on_window1_destroy" swapped="no"/>
@@ -45,6 +71,7 @@
           <object class="GtkLabel" id="label1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_top">10</property>
             <property name="label" translatable="yes">MI APLICACIÓN</property>
             <attributes>
               <attribute name="font-desc" value="Abyssinica SIL 20"/>
@@ -461,7 +488,7 @@
                     <property name="can_focus">False</property>
                     <property name="margin_top">10</property>
                     <property name="margin_bottom">10</property>
-                    <property name="label" translatable="yes">Productos</property>
+                    <property name="label" translatable="yes">PRODUCTOS</property>
                     <attributes>
                       <attribute name="font-desc" value="Abyssinica SIL Italic 12"/>
                       <attribute name="style" value="italic"/>
@@ -648,9 +675,9 @@
                 </child>
                 <child>
                   <object class="GtkTreeView" id="vistaproductos">
+                    <property name="height_request">300</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_bottom">319</property>
                     <property name="model">listaproductos</property>
                     <property name="ubuntu_almost_fixed_height_mode">True</property>
                     <child internal-child="selection">
@@ -733,19 +760,345 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkLabel" id="label17">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="label" translatable="yes">VENTAS</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Abyssinica SIL Italic 12"/>
+                      <attribute name="style" value="italic"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkGrid" id="grid1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="margin_top">20</property>
+                    <property name="margin_bottom">20</property>
+                    <property name="column_homogeneous">True</property>
+                    <child>
+                      <object class="GtkLabel" id="label18">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_left">10</property>
+                        <property name="label" translatable="yes">Cliente: </property>
+                        <attributes>
+                          <attribute name="font-desc" value="Abyssinica SIL Italic 10"/>
+                          <attribute name="style" value="italic"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBox" id="combocliente">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkGrid" id="grid5">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="margin_bottom">20</property>
+                    <child>
+                      <object class="GtkLabel" id="label19">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_left">10</property>
+                        <property name="label" translatable="yes">Produto: </property>
+                        <attributes>
+                          <attribute name="font-desc" value="Abyssinica SIL Italic 10"/>
+                          <attribute name="style" value="italic"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label20">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_left">10</property>
+                        <property name="label" translatable="yes">Cantidad: </property>
+                        <attributes>
+                          <attribute name="font-desc" value="Abyssinica SIL Italic 10"/>
+                          <attribute name="style" value="italic"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBox" id="combobox1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entry1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkButtonBox" id="buttonbox3">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="margin_bottom">10</property>
+                    <property name="layout_style">start</property>
+                    <child>
+                      <object class="GtkButton" id="button1">
+                        <property name="label" translatable="yes">Insertar</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button2">
+                        <property name="label" translatable="yes">Borrar</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="margin_left">10</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button3">
+                        <property name="label" translatable="yes">Modificar</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="margin_left">10</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button4">
+                        <property name="label" translatable="yes">Facturar</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="margin_left">10</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button9">
+                        <property name="label" translatable="yes">Salir</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="margin_left">10</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkTreeView" id="vistafacturas">
+                    <property name="height_request">300</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="margin_bottom">10</property>
+                    <property name="model">listafacturas</property>
+                    <property name="ubuntu_almost_fixed_height_mode">True</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection" id="treeview-selection4"/>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn11">
+                        <property name="title" translatable="yes">Factura</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext11"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn12">
+                        <property name="title" translatable="yes">Cliente</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext12"/>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn13">
+                        <property name="title" translatable="yes">Fecha</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext13"/>
+                          <attributes>
+                            <attribute name="text">2</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkTreeView" id="vistadetalles">
+                    <property name="height_request">300</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="model">listadetalles</property>
+                    <property name="ubuntu_almost_fixed_height_mode">True</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection" id="treeview-selection5"/>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn14">
+                        <property name="title" translatable="yes">Codigo</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext14"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn15">
+                        <property name="title" translatable="yes">Factura</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext15"/>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn16">
+                        <property name="title" translatable="yes">Producto</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext16"/>
+                          <attributes>
+                            <attribute name="text">2</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn17">
+                        <property name="title" translatable="yes">Precio/Unidad</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext17"/>
+                          <attributes>
+                            <attribute name="text">3</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn18">
+                        <property name="title" translatable="yes">Cantidad</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext18"/>
+                          <attributes>
+                            <attribute name="text">4</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn19">
+                        <property name="title" translatable="yes">Precio Total</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext19"/>
+                          <attributes>
+                            <attribute name="text">5</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">5</property>
+                  </packing>
                 </child>
               </object>
               <packing>
