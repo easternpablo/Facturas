@@ -30,6 +30,8 @@ class Facturas:
         self.listaC = b.get_object("listaclientes")
         dic = {"on_window1_destroy": self.cerrar,
                "on_btninsert_clicked": self.insertarC,
+               "on_btndelete_clicked": self.borrarC,
+               "on_btnupdate_clicked": self.modificarC,
                "on_btnsalir_clicked": self.cerrar,
                "on_vistaclientes_cursor_changed": self.selectC,}
         b.connect_signals(dic)
@@ -38,7 +40,9 @@ class Facturas:
         
     def cerrar(self, widget):
         Gtk.main_quit()
-        
+    
+    ## OPERACIONES CLIENTES ( INSERTAR, MODIFICAR, ELIMINAR, SELECCIONAR ) 
+    
     def insertarC(self, widget, data = None):
         self.dni = self.entDni.get_text()
         self.nombre = self.entName.get_text()
@@ -54,6 +58,28 @@ class Facturas:
             self.listarclientes()
         else:
             print("No puedes dejar campos vacios...")
+            
+    def borrarC(self, widget, data = None):
+        self.dni = self.entDni.get_text()
+        if self.dni != '':
+            conexion.eliminarCli(self.dni)
+            modulos.limpiarClientes(self)
+            self.listaC.clear()
+            self.listarclientes()
+        else:
+            print("No puedes dejar el campo dni vacio...")
+            
+    def modificarC(self, widget, data = None):
+        self.dni = self.entDni.get_text()
+        self.nombre = self.entName.get_text()
+        self.apellidos = self.entApellidos.get_text()
+        self.direccion = self.entDireccion.get_text()
+        self.telefono = self.entTelefono.get_text()
+        self.email = self.entEmail.get_text()
+        if self.dni != '' and self.nombre != '' and self.apellidos != '' and self.direccion != '' and self.telefono != '' and self.email != '':
+            conexion.modificarCli(self.dni,self.nombre,self.apellidos,self.direccion,self.telefono,self.email)
+            self.listaC.clear()
+            self.listarclientes()
             
     def selectC(self, widget):
         model, iter = self.vistaC.get_selection().get_selected()
