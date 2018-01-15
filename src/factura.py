@@ -130,10 +130,19 @@ class Facturas:
         else:
             print("No puedes dejar campos vacios...")
             
+    def borrarP(self, widget, data = None):
+        if self.scodigo != '':
+            conexion.eliminarPro(self.scodigo)
+            modulos.limpiarProductos(self)
+            self.listaP.clear()
+            self.listarproductos()
+        else:
+            print("Tienes que seleccionar el producto a eliminar")
+            
     def selectP(self, widget):
         model, iter = self.vistaP.get_selection().get_selected()
         if iter != None:
-            scodigo = model.get_value(iter, 0)
+            self.scodigo = model.get_value(iter, 0)
             sproducto = model.get_value(iter, 1)
             sprecio = model.get_value(iter, 2)
             sstock = model.get_value(iter, 3)

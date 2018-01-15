@@ -55,6 +55,15 @@ def insertarPro(registro):
         print("Fallo durante la insercion de un producto....")
         conexion.rollback()
         
+def eliminarPro(codigo):
+    try:
+        cursor.execute(" delete from Producto where Id_Producto=?",(codigo,))
+        conexion.commit()
+        print(">> Producto eliminado")
+    except:
+        print("Fallo durante la eliminacion de un producto....")
+        conexion.rollback()
+        
 def listarPro():
     try:
         cursor.execute(" select * from Producto")
