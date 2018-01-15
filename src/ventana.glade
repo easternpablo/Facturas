@@ -526,7 +526,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry7">
+                      <object class="GtkEntry" id="entryprod">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                       </object>
@@ -581,7 +581,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry8">
+                      <object class="GtkEntry" id="entryprecio">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                       </object>
@@ -591,7 +591,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry9">
+                      <object class="GtkEntry" id="entrystock">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                       </object>
@@ -616,11 +616,12 @@
                     <property name="margin_bottom">10</property>
                     <property name="layout_style">start</property>
                     <child>
-                      <object class="GtkButton" id="button5">
+                      <object class="GtkButton" id="btninsert2">
                         <property name="label" translatable="yes">Insertar</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <signal name="clicked" handler="on_btninsert2_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -629,7 +630,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="button6">
+                      <object class="GtkButton" id="btndelete2">
                         <property name="label" translatable="yes">Borrar</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -643,7 +644,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="button7">
+                      <object class="GtkButton" id="btnupdate2">
                         <property name="label" translatable="yes">Modificar</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -657,12 +658,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="button8">
+                      <object class="GtkButton" id="btnsalir2">
                         <property name="label" translatable="yes">Salir</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="margin_left">10</property>
+                        <signal name="clicked" handler="on_btnsalir2_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -684,6 +686,7 @@
                     <property name="can_focus">True</property>
                     <property name="model">listaproductos</property>
                     <property name="ubuntu_almost_fixed_height_mode">True</property>
+                    <signal name="cursor-changed" handler="on_vistaproductos_cursor_changed" swapped="no"/>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection" id="treeview-selection2"/>
                     </child>
@@ -1127,7 +1130,7 @@
                     </child>
                     <child>
                       <object class="GtkTreeViewColumn" id="treeviewcolumn19">
-                        <property name="title" translatable="yes">Precio Total</property>
+                        <property name="title" translatable="yes">Precio/Total</property>
                         <child>
                           <object class="GtkCellRendererText" id="cellrenderertext19"/>
                           <attributes>

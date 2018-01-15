@@ -43,3 +43,23 @@ def listarCli():
     except:
         print("Fallo durante el listado de los clientes....")
         cursor.rollback()
+        
+## OPERACIONES PRODUCTOS
+
+def insertarPro(registro):
+    try:
+        cursor.execute(" insert into Producto(Nombre,Precio,Stock) values(?,?,?)",registro)
+        conexion.commit()
+        print(">> Nuevo Producto ingresado")
+    except:
+        print("Fallo durante la insercion de un producto....")
+        conexion.rollback()
+        
+def listarPro():
+    try:
+        cursor.execute(" select * from Producto")
+        resultado = cursor.fetchall()
+        return resultado
+    except:
+        print("Fallo durante el listado de los productos....")
+        cursor.rollback()

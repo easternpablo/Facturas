@@ -20,23 +20,36 @@ class Facturas:
         self.entDireccion = b.get_object("entrydireccion")
         self.entTelefono = b.get_object("entrytelefono")
         self.entEmail = b.get_object("entryemail")
+        self.entProd = b.get_object("entryprod")
+        self.entPrecio = b.get_object("entryprecio")
+        self.entStock = b.get_object("entrystock")
         ## BOTONES
         self.insert = b.get_object("btninsert")
         self.delete = b.get_object("btndelete")
         self.update = b.get_object("btnupdate")
         self.salir = b.get_object("btnsalir")
+        self.insert2 = b.get_object("btninsert2")
+        self.delete2 = b.get_object("btndelete2")
+        self.update2 = b.get_object("btnupdate2")
+        self.salir2 = b.get_object("btnsalir2")
         ## OTROS WIDGETS
         self.vistaC = b.get_object("vistaclientes")
         self.listaC = b.get_object("listaclientes")
+        self.vistaP = b.get_object("vistaproductos")
+        self.listaP = b.get_object("listaproductos")
         dic = {"on_window1_destroy": self.cerrar,
                "on_btninsert_clicked": self.insertarC,
+               "on_btninsert2_clicked": self.insertarP,
                "on_btndelete_clicked": self.borrarC,
                "on_btnupdate_clicked": self.modificarC,
                "on_btnsalir_clicked": self.cerrar,
-               "on_vistaclientes_cursor_changed": self.selectC,}
+               "on_btnsalir2_clicked": self.cerrar,
+               "on_vistaclientes_cursor_changed": self.selectC,
+               "on_vistaproductos_cursor_changed": self.selectP,}
         b.connect_signals(dic)
         self.ventana.show_all()
         self.listarclientes()
+        self.listarproductos()
         
     def cerrar(self, widget):
         Gtk.main_quit()
@@ -101,6 +114,37 @@ class Facturas:
         resultado = conexion.listarCli()
         for registroC in resultado:
             self.listaC.append(registroC)
+            
+    ## OPERACIONES PRODUCTOS ( INSERTAR, MODIFICAR, ELIMINAR, SELECCIONAR )
+    
+    def insertarP(self, widget, data = None):
+        self.producto = self.entProd.get_text()
+        self.precio = self.entPrecio.get_text()
+        self.stock = self.entStock.get_text()
+        fila = (self.producto,self.precio,self.stock)
+        if self.producto != '' and self.precio != '' and self.stock != '':
+            conexion.insertarPro(fila)
+            modulos.limpiarProductos(self)
+            self.listaP.clear()
+            self.listarproductos()
+        else:
+            print("No puedes dejar campos vacios...")
+            
+    def selectP(self, widget):
+        model, iter = self.vistaP.get_selection().get_selected()
+        if iter != None:
+            scodigo = model.get_value(iter, 0)
+            sproducto = model.get_value(iter, 1)
+            sprecio = model.get_value(iter, 2)
+            sstock = model.get_value(iter, 3)
+            self.entProd.set_text(sproducto)
+            self.entPrecio.set_text(str(sprecio))
+            self.entStock.set_text(str(sstock))
+            
+    def listarproductos(self):
+        resultado = conexion.listarPro()
+        for registroP in resultado:
+            self.listaP.append(registroP)
             
 if __name__ == "__main__":
     main = Facturas()
