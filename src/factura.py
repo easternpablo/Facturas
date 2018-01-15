@@ -32,11 +32,13 @@ class Facturas:
         self.delete2 = b.get_object("btndelete2")
         self.update2 = b.get_object("btnupdate2")
         self.salir2 = b.get_object("btnsalir2")
-        ## OTROS WIDGETS
-        self.vistaC = b.get_object("vistaclientes")
+        ## LISTAS
         self.listaC = b.get_object("listaclientes")
-        self.vistaP = b.get_object("vistaproductos")
         self.listaP = b.get_object("listaproductos")
+        ## VISTAS
+        self.vistaC = b.get_object("vistaclientes")
+        self.vistaP = b.get_object("vistaproductos")
+        ## DICCIONARIO CON EVENTOS
         dic = {"on_window1_destroy": self.cerrar,
                "on_btninsert_clicked": self.insertarC,
                "on_btninsert2_clicked": self.insertarP,
