@@ -113,7 +113,7 @@ class Facturas:
             self.entDireccion.set_text(sdireccion)
             self.entTelefono.set_text(str(stelefono))
             self.entEmail.set_text(semail)
-            
+         
     def listarclientes(self):
         resultado = conexion.listarCli()
         for registroC in resultado:
@@ -167,6 +167,9 @@ class Facturas:
         resultado = conexion.listarPro()
         for registroP in resultado:
             self.listaP.append(registroP)
+            
+    ## OPERACIONES FACTURACION
+    self.fecha = time.strftime("%d/%m/%y") ## Establece la fecha actual   
             
 if __name__ == "__main__":
     main = Facturas()
