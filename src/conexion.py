@@ -64,6 +64,14 @@ def eliminarPro(codigo):
         print("Fallo durante la eliminacion de un producto....")
         conexion.rollback()
         
+def modificarPro(codigo,producto,precio,stock):
+    try:
+        cursor.execute(" update Producto set Nombre=?, Precio=?, Stock=? where Id_Producto=?",(producto,precio,stock,codigo))
+        conexion.commit()
+    except:
+        print("Fallo durante la modificacion de un producto....")
+        conexion.rollback()
+        
 def listarPro():
     try:
         cursor.execute(" select * from Producto")

@@ -651,6 +651,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="margin_left">10</property>
+                        <signal name="clicked" handler="on_btnupdate2_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">True</property>

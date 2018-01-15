@@ -43,6 +43,7 @@ class Facturas:
                "on_btndelete_clicked": self.borrarC,
                "on_btndelete2_clicked": self.borrarP,
                "on_btnupdate_clicked": self.modificarC,
+               "on_btnupdate2_clicked": self.modificarP,
                "on_btnsalir_clicked": self.cerrar,
                "on_btnsalir2_clicked": self.cerrar,
                "on_vistaclientes_cursor_changed": self.selectC,
@@ -139,6 +140,15 @@ class Facturas:
             self.listarproductos()
         else:
             print("Tienes que seleccionar el producto a eliminar")
+            
+    def modificarP(self, widget, data = None):
+        self.producto = self.entProd.get_text()
+        self.precio = self.entPrecio.get_text()
+        self.stock = self.entStock.get_text()
+        if self.scodigo != '':
+            conexion.modificarPro(self.scodigo,self.producto,self.precio,self.stock)
+            self.listaP.clear()
+            self.listarproductos()
             
     def selectP(self, widget):
         model, iter = self.vistaP.get_selection().get_selected()
