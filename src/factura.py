@@ -41,6 +41,7 @@ class Facturas:
                "on_btninsert_clicked": self.insertarC,
                "on_btninsert2_clicked": self.insertarP,
                "on_btndelete_clicked": self.borrarC,
+               "on_btndelete2_clicked": self.borrarP,
                "on_btnupdate_clicked": self.modificarC,
                "on_btnsalir_clicked": self.cerrar,
                "on_btnsalir2_clicked": self.cerrar,
