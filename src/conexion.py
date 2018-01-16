@@ -90,6 +90,15 @@ def insertarFac(registro):
     except:
         print("Fallo durante la insercion de una factura....")
         conexion.rollback()
+    
+def eliminarFac(codigo):
+    try:
+        cursor.execute(" delete from Factura where Num_Factura=?",(codigo,))
+        conexion.commit()
+        print(">> Factura eliminada")
+    except:
+        print("Fallo durante la eliminacion de una factura....")
+        conexion.rollback()
         
 def listarFac():
     try:

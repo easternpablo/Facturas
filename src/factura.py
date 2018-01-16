@@ -36,6 +36,7 @@ class Facturas:
         self.update2 = b.get_object("btnupdate2")
         self.salir2 = b.get_object("btnsalir2")
         self.iniV = b.get_object("btnstartV")
+        self.finV = b.get_object("btnfinishV")
         ## LISTAS
         self.listaC = b.get_object("listaclientes")
         self.listaP = b.get_object("listaproductos")
@@ -55,6 +56,7 @@ class Facturas:
                "on_btnsalir_clicked": self.cerrar,
                "on_btnsalir2_clicked": self.cerrar,
                "on_btnstartV_clicked": self.agregarFactura,
+               "on_btnfinishV_clicked": self.eliminarFactura,
                "on_vistaclientes_cursor_changed": self.selectC,
                "on_vistaproductos_cursor_changed": self.selectP,
                "on_vistafacturas_cursor_changed": self.selectF,}
@@ -145,8 +147,8 @@ class Facturas:
             print("No puedes dejar campos vacios...")
             
     def borrarP(self, widget, data = None):
-        if self.scodigo != '':
-            conexion.eliminarPro(self.scodigo)
+        if self.scodigoP != '':
+            conexion.eliminarPro(self.scodigoP)
             modulos.limpiarProductos(self)
             self.listaP.clear()
             self.listarproductos()
@@ -157,15 +159,15 @@ class Facturas:
         self.producto = self.entProd.get_text()
         self.precio = self.entPrecio.get_text()
         self.stock = self.entStock.get_text()
-        if self.scodigo != '':
-            conexion.modificarPro(self.scodigo,self.producto,self.precio,self.stock)
+        if self.scodigoP != '':
+            conexion.modificarPro(self.scodigoP,self.producto,self.precio,self.stock)
             self.listaP.clear()
             self.listarproductos()
             
     def selectP(self, widget):
         model, iter = self.vistaP.get_selection().get_selected()
         if iter != None:
-            self.scodigo = model.get_value(iter, 0)
+            self.scodigoP = model.get_value(iter, 0)
             sproducto = model.get_value(iter, 1)
             sprecio = model.get_value(iter, 2)
             sstock = model.get_value(iter, 3)
@@ -190,6 +192,15 @@ class Facturas:
             self.listarfacturas()
         else:
             print("No puedes dejar el campo cliente vacio...")
+            
+    def eliminarFactura(self, widget, data = None):
+        if self.scodigo != '':
+            conexion.eliminarFac(self.scodigo)
+            modulos.limpiarFacturas(self)
+            self.listaF.clear()
+            self.listarfacturas()
+        else:
+            print("No puedes dejar el campo dni vacio...")
             
     def selectF(self, widget):
         model, iter = self.vistaF.get_selection().get_selected()
