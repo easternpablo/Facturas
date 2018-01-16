@@ -6,7 +6,6 @@ try:
 except:
     print("Error de conexion...")
     
-
 ## OPERACIONES CLIENTES
 
 def insertarCli(registro):
@@ -79,4 +78,24 @@ def listarPro():
         return resultado
     except:
         print("Fallo durante el listado de los productos....")
+        cursor.rollback()
+        
+## OPERACIONES VENTAS
+
+def insertarFac(registro):
+    try:
+        cursor.execute(" insert into Factura(Id_Cliente,Fecha) values(?,?)",registro)
+        conexion.commit()
+        print(">> Nueva factura agregada")
+    except:
+        print("Fallo durante la insercion de una factura....")
+        conexion.rollback()
+        
+def listarFac():
+    try:
+        cursor.execute(" select * from Factura")
+        resultado = cursor.fetchall()
+        return resultado
+    except:
+        print("Fallo durante el listado de las facturas....")
         cursor.rollback()

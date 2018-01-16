@@ -1,4 +1,5 @@
 import os
+import time
 import modulos
 import conexion
 os.environ['UBUNTU_MENUPROXY']='0'
@@ -11,8 +12,9 @@ class Facturas:
     def __init__(self):
         b = Gtk.Builder()
         b.add_from_file("ventana.glade")
-        ## VENTANAS
+        ## VENTANAS Y LABELS
         self.ventana = b.get_object("window1")
+        self.etiquetaCod = b.get_object("lblnumfactura")
         ## CAMPOS DE TEXTOS
         self.entDni = b.get_object("entrydni")
         self.entName = b.get_object("entryname")
@@ -23,6 +25,7 @@ class Facturas:
         self.entProd = b.get_object("entryprod")
         self.entPrecio = b.get_object("entryprecio")
         self.entStock = b.get_object("entrystock")
+        self.entCliente = b.get_object("entrycliente")
         ## BOTONES
         self.insert = b.get_object("btninsert")
         self.delete = b.get_object("btndelete")
@@ -32,12 +35,15 @@ class Facturas:
         self.delete2 = b.get_object("btndelete2")
         self.update2 = b.get_object("btnupdate2")
         self.salir2 = b.get_object("btnsalir2")
+        self.iniV = b.get_object("btnstartV")
         ## LISTAS
         self.listaC = b.get_object("listaclientes")
         self.listaP = b.get_object("listaproductos")
+        self.listaF = b.get_object("listafacturas")
         ## VISTAS
         self.vistaC = b.get_object("vistaclientes")
         self.vistaP = b.get_object("vistaproductos")
+        self.vistaF = b.get_object("vistafacturas")
         ## DICCIONARIO CON EVENTOS
         dic = {"on_window1_destroy": self.cerrar,
                "on_btninsert_clicked": self.insertarC,
@@ -48,12 +54,15 @@ class Facturas:
                "on_btnupdate2_clicked": self.modificarP,
                "on_btnsalir_clicked": self.cerrar,
                "on_btnsalir2_clicked": self.cerrar,
+               "on_btnstartV_clicked": self.agregarFactura,
                "on_vistaclientes_cursor_changed": self.selectC,
-               "on_vistaproductos_cursor_changed": self.selectP,}
+               "on_vistaproductos_cursor_changed": self.selectP,
+               "on_vistafacturas_cursor_changed": self.selectF,}
         b.connect_signals(dic)
         self.ventana.show_all()
         self.listarclientes()
         self.listarproductos()
+        self.listarfacturas()
         
     def cerrar(self, widget):
         Gtk.main_quit()
@@ -113,6 +122,7 @@ class Facturas:
             self.entDireccion.set_text(sdireccion)
             self.entTelefono.set_text(str(stelefono))
             self.entEmail.set_text(semail)
+            self.entCliente.set_text(sdni)
          
     def listarclientes(self):
         resultado = conexion.listarCli()
@@ -169,7 +179,30 @@ class Facturas:
             self.listaP.append(registroP)
             
     ## OPERACIONES FACTURACION
-    self.fecha = time.strftime("%d/%m/%y") ## Establece la fecha actual   
+    
+    def agregarFactura(self, widget):
+        self.cliente = self.entCliente.get_text()
+        self.fecha = time.strftime("%d/%m/%y")
+        fila = (self.cliente,self.fecha)
+        if self.cliente != '':
+            conexion.insertarFac(fila)
+            self.listaF.clear()
+            self.listarfacturas()
+        else:
+            print("No puedes dejar el campo cliente vacio...")
+            
+    def selectF(self, widget):
+        model, iter = self.vistaF.get_selection().get_selected()
+        if iter != None:
+            self.scodigo = model.get_value(iter, 0)
+            scliente = model.get_value(iter, 1)
+            sfecha = model.get_value(iter, 2)
+            self.etiquetaCod.set_text(str(self.scodigo))
+            
+    def listarfacturas(self):
+        resultado = conexion.listarFac()
+        for registroF in resultado:
+            self.listaF.append(registroF)
             
 if __name__ == "__main__":
     main = Facturas()
