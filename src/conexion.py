@@ -2,6 +2,7 @@ try:
     import sqlite3
     bbdd = "Facturas.sqlite"
     conexion = sqlite3.connect(bbdd)
+    conexion.text_factory = str
     cursor = conexion.cursor()
 except:
     print("Error de conexion...")
