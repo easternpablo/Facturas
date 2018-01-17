@@ -81,7 +81,7 @@ def listarPro():
         print("Fallo durante el listado de los productos....")
         conexion.rollback()
         
-## OPERACIONES VENTAS
+## OPERACIONES CON EL COMBO BOX
 
 def productos():
     try:
@@ -100,9 +100,10 @@ def cogerPrecio(producto):
         Precio = referencia[0]
         return Precio
     except:
-        
         print("Hubo problemas al seleccionar un producto....")
         conexion.rollback
+
+## OPERACIONES VENTAS
         
 def insertarFac(registro):
     try:
@@ -113,14 +114,14 @@ def insertarFac(registro):
         print("Fallo durante la insercion de una factura....")
         conexion.rollback()
     
-def eliminarFac(codigo):
-    try:
-        cursor.execute(" delete from Factura where Num_Factura=?",(codigo,))
-        conexion.commit()
-        print(">> Factura eliminada")
-    except:
-        print("Fallo durante la eliminacion de una factura....")
-        conexion.rollback()
+#def eliminarFac(codigo):
+#    try:
+#        cursor.execute(" delete from Factura where Num_Factura=?",(codigo,))
+#        conexion.commit()
+#        print(">> Factura eliminada")
+#    except:
+#        print("Fallo durante la eliminacion de una factura....")
+#        conexion.rollback()
         
 def listarFac():
     try:

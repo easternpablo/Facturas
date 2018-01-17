@@ -60,7 +60,7 @@ class Facturas:
                "on_btnsalir_clicked": self.cerrar,
                "on_btnsalir2_clicked": self.cerrar,
                "on_btnstartV_clicked": self.agregarFactura,
-               "on_btnfinishV_clicked": self.eliminarFactura,
+#               "on_btnfinishV_clicked": self.eliminarFactura,
                "on_cmbproducto_changed": self.selectProd,
                "on_vistaclientes_cursor_changed": self.selectC,
                "on_vistaproductos_cursor_changed": self.selectP,
@@ -212,14 +212,14 @@ class Facturas:
         else:
             print("No puedes dejar el campo cliente vacio...")
             
-    def eliminarFactura(self, widget, data = None):
-        if self.scodigo != '':
-            conexion.eliminarFac(self.scodigo)
-            modulos.limpiarFacturas(self)
-            self.listaF.clear()
-            self.listarfacturas()
-        else:
-            print("No puedes dejar el campo dni vacio...")
+#    def eliminarFactura(self, widget, data = None):
+#        if self.scodigo != '':
+#            conexion.eliminarFac(self.scodigo)
+#            modulos.limpiarFacturas(self)
+#            self.listaF.clear()
+#            self.listarfacturas()
+#        else:
+#            print("No puedes dejar el campo dni vacio...")
             
     def selectF(self, widget):
         model, iter = self.vistaF.get_selection().get_selected()
