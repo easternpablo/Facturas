@@ -40,11 +40,14 @@ class Facturas:
         ## LISTAS
         self.listaC = b.get_object("listaclientes")
         self.listaP = b.get_object("listaproductos")
+        self.listaP2 = b.get_object("listaprod")
         self.listaF = b.get_object("listafacturas")
         ## VISTAS
         self.vistaC = b.get_object("vistaclientes")
         self.vistaP = b.get_object("vistaproductos")
         self.vistaF = b.get_object("vistafacturas")
+        ## OTROS WIDGETS
+        self.comboproducto = b.get_object("cmbproducto")
         ## DICCIONARIO CON EVENTOS
         dic = {"on_window1_destroy": self.cerrar,
                "on_btninsert_clicked": self.insertarC,
@@ -57,6 +60,7 @@ class Facturas:
                "on_btnsalir2_clicked": self.cerrar,
                "on_btnstartV_clicked": self.agregarFactura,
                "on_btnfinishV_clicked": self.eliminarFactura,
+               "on_cmbproducto_changed": self.cargarProductos,
                "on_vistaclientes_cursor_changed": self.selectC,
                "on_vistaproductos_cursor_changed": self.selectP,
                "on_vistafacturas_cursor_changed": self.selectF,}
@@ -65,6 +69,7 @@ class Facturas:
         self.listarclientes()
         self.listarproductos()
         self.listarfacturas()
+        self.cargarProductos(self)
         
     def cerrar(self, widget):
         Gtk.main_quit()
@@ -182,6 +187,11 @@ class Facturas:
             
     ## OPERACIONES FACTURACION
     
+    def cargarProductos(self, widget):
+        lista = conexion.productos()
+        for row in lista:
+            self.listaP2.append(row)
+        
     def agregarFactura(self, widget):
         self.cliente = self.entCliente.get_text()
         self.fecha = time.strftime("%d/%m/%y")

@@ -42,7 +42,7 @@ def listarCli():
         return resultado
     except:
         print("Fallo durante el listado de los clientes....")
-        cursor.rollback()
+        conexion.rollback()
         
 ## OPERACIONES PRODUCTOS
 
@@ -79,9 +79,18 @@ def listarPro():
         return resultado
     except:
         print("Fallo durante el listado de los productos....")
-        cursor.rollback()
+        conexion.rollback()
         
 ## OPERACIONES VENTAS
+
+def productos():
+    try:
+        cursor.execute("select Nombre from Producto")
+        listado = cursor.fetchall()
+        return listado
+    except:
+        print("Hubo problemas al cargar los productos....")
+        conexion.rollback
 
 def insertarFac(registro):
     try:
@@ -108,4 +117,4 @@ def listarFac():
         return resultado
     except:
         print("Fallo durante el listado de las facturas....")
-        cursor.rollback()
+        conexion.rollback()
