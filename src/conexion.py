@@ -91,7 +91,19 @@ def productos():
     except:
         print("Hubo problemas al cargar los productos....")
         conexion.rollback
-
+        
+def cogerPrecio(producto):
+    try:
+        cursor.execute("select Precio from Producto where Nombre=?",(producto,))
+        referencia = cursor.fetchone()
+        conexion.commit()
+        Precio = referencia[0]
+        return Precio
+    except:
+        
+        print("Hubo problemas al seleccionar un producto....")
+        conexion.rollback
+        
 def insertarFac(registro):
     try:
         cursor.execute(" insert into Factura(Id_Cliente,Fecha) values(?,?)",registro)

@@ -15,6 +15,7 @@ class Facturas:
         ## VENTANAS Y LABELS
         self.ventana = b.get_object("window1")
         self.etiquetaCod = b.get_object("lblnumfactura")
+        self.etiquetaPrecio = b.get_object("lblprecio")
         ## CAMPOS DE TEXTOS
         self.entDni = b.get_object("entrydni")
         self.entName = b.get_object("entryname")
@@ -60,7 +61,7 @@ class Facturas:
                "on_btnsalir2_clicked": self.cerrar,
                "on_btnstartV_clicked": self.agregarFactura,
                "on_btnfinishV_clicked": self.eliminarFactura,
-               "on_cmbproducto_changed": self.cargarProductos,
+               "on_cmbproducto_changed": self.selectProd,
                "on_vistaclientes_cursor_changed": self.selectC,
                "on_vistaproductos_cursor_changed": self.selectP,
                "on_vistafacturas_cursor_changed": self.selectF,}
@@ -191,6 +192,14 @@ class Facturas:
         lista = conexion.productos()
         for row in lista:
             self.listaP2.append(row)
+            
+    def selectProd(self, widget):
+        index = self.comboproducto.get_active()
+        model = self.comboproducto.get_model()
+        self.producto = model[index]
+        print(self.producto[0])
+        precio = conexion.cogerPrecio(self.producto[0])
+        self.etiquetaPrecio.set_text(str(precio))
         
     def agregarFactura(self, widget):
         self.cliente = self.entCliente.get_text()
