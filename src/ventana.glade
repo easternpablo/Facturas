@@ -26,11 +26,11 @@
       <column type="gint"/>
       <!-- column-name producto -->
       <column type="gint"/>
-      <!-- column-name precioUnidad -->
-      <column type="gfloat"/>
       <!-- column-name cantidad -->
       <column type="gint"/>
-      <!-- column-name precioTotal -->
+      <!-- column-name precio -->
+      <column type="gfloat"/>
+      <!-- column-name precioFinal -->
       <column type="gfloat"/>
     </columns>
   </object>
@@ -1078,7 +1078,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entryprecioprod">
+                      <object class="GtkEntry" id="entrycantprod">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                       </object>
@@ -1128,11 +1128,12 @@
                     <property name="margin_top">10</property>
                     <property name="layout_style">start</property>
                     <child>
-                      <object class="GtkButton" id="button1">
+                      <object class="GtkButton" id="btnagregarcarrito">
                         <property name="label" translatable="yes">Agregar al Carrito</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <signal name="clicked" handler="on_btnagregarcarrito_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -1235,7 +1236,7 @@
                         </child>
                         <child>
                           <object class="GtkTreeViewColumn" id="treeviewcolumn17">
-                            <property name="title" translatable="yes">Precio/Unidad</property>
+                            <property name="title" translatable="yes">Cantidad</property>
                             <property name="expand">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellrenderertext17"/>
@@ -1247,7 +1248,7 @@
                         </child>
                         <child>
                           <object class="GtkTreeViewColumn" id="treeviewcolumn18">
-                            <property name="title" translatable="yes">Cantidad</property>
+                            <property name="title" translatable="yes">Precio/Unidad</property>
                             <property name="expand">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellrenderertext18"/>

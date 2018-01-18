@@ -16,3 +16,7 @@ def limpiarProductos(self):
 def limpiarFacturas(self):
     self.entCliente.set_text('')
     self.etiquetaCod.set_text('')
+    
+def limpiarDetalle(self):
+    self.entCantidad.set_text('')
+    self.etiquetaPrecio.set_text('')

@@ -102,6 +102,28 @@ def cogerPrecio(producto):
     except:
         print("Hubo problemas al seleccionar un producto....")
         conexion.rollback
+        
+def cogerCodigo(producto):
+    try:
+        cursor.execute("select Id_Producto from Producto where Nombre=?",(producto,))
+        referencia = cursor.fetchone()
+        conexion.commit()
+        codigo = referencia[0]
+        return codigo
+    except:
+        print("Hubo problemas al seleccionar un producto....")
+        conexion.rollback
+        
+def cogerStock(producto):
+    try:
+        cursor.execute("select Stock from Producto where Nombre=?",(producto,))
+        referencia = cursor.fetchone()
+        conexion.commit()
+        stock = referencia[0]
+        return stock
+    except:
+        print("Hubo problemas al seleccionar un producto....")
+        conexion.rollback
 
 ## OPERACIONES VENTAS
         
@@ -112,6 +134,42 @@ def insertarFac(registro):
         print(">> Nueva factura agregada")
     except:
         print("Fallo durante la insercion de una factura....")
+        conexion.rollback()
+        
+def insertarVent(registro):
+    try:
+        cursor.execute(" insert into Venta(Id_Factura,Id_Producto,Cantidad,Precio,PrecioFinal) values(?,?,?,?,?)",registro)
+        conexion.commit()
+        print(">> Nueva venta agregada")
+    except:
+        print("Fallo durante la insercion de una venta....")
+        conexion.rollback()
+        
+def actualizarStock(stock,codigo):
+    try:
+        cursor.execute(" update Producto set Stock=? where Id_Producto=?",(stock,codigo))
+        conexion.commit()
+        print("Stock actualizado con exito")
+    except:
+        print("Fallo durante la actualizacion del stock....")
+        conexion.rollback()
+        
+def listarVen():
+    try:
+        cursor.execute(" select * from Venta")
+        resultado = cursor.fetchall()
+        return resultado
+    except:
+        print(">> Fallo durante el listado de las ventas....")
+        conexion.rollback()
+        
+def listarVentasConcreta(numfactura):
+    try:
+        cursor.execute(" select * from Venta where Id_Factura=?",(numfactura,))
+        resultado = cursor.fetchall()
+        return resultado
+    except:
+        print("Fallo durante el listado de las ventas....")
         conexion.rollback()
     
 #def eliminarFac(codigo):
