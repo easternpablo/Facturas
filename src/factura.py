@@ -40,6 +40,7 @@ class Facturas:
         self.iniV = b.get_object("btnstartV")
         self.finV = b.get_object("btnfinishV")
         self.agregarV = b.get_object("btnagregarcarrito")
+        self.imprimir = b.get_object("btnprint")
         ## LISTAS
         self.listaC = b.get_object("listaclientes")
         self.listaP = b.get_object("listaproductos")
@@ -65,7 +66,8 @@ class Facturas:
                "on_btnsalir2_clicked": self.cerrar,
                "on_btnstartV_clicked": self.agregarFactura,
                "on_btnagregarcarrito_clicked": self.agregarVenta,
-#               "on_btnfinishV_clicked": self.eliminarFactura,
+               "on_btnprint_clicked": self.formarPDF,
+#              "on_btnfinishV_clicked": self.eliminarFactura,
                "on_cmbproducto_changed": self.selectProd,
                "on_vistaclientes_cursor_changed": self.selectC,
                "on_vistaproductos_cursor_changed": self.selectP,
@@ -76,10 +78,14 @@ class Facturas:
         self.listarproductos()
         self.listarfacturas()
         self.cargarProductos(self)
-        self.listarventas()
         
     def cerrar(self, widget):
         Gtk.main_quit()
+        
+    def formarPDF(self, widget):
+        self.numFactura = self.etiquetaCod.get_text()
+        self.dniCliente = self.entCliente.get_text()
+        PDF.getFactura(self.numFactura, self.dniCliente)
     
     ## OPERACIONES CLIENTES ( INSERTAR, MODIFICAR, ELIMINAR, SELECCIONAR ) 
     
@@ -225,6 +231,7 @@ class Facturas:
             sfecha = model.get_value(iter, 2)
             self.entCliente.set_text(scliente)
             self.etiquetaCod.set_text(str(self.scodigo))
+            self.listaV.clear()
             self.listarventas2(self.scodigo)
             
     def listarfacturas(self):
@@ -235,6 +242,7 @@ class Facturas:
     ## OPERACIONES VENTA
             
     def agregarVenta(self, widget):
+        self.factura = self.etiquetaCod.get_text()
         self.codProd = conexion.cogerCodigo(self.producto[0])
         self.cantidad = self.entCantidad.get_text()
         self.precioUnidad = float(self.etiquetaPrecio.get_text())
@@ -249,8 +257,7 @@ class Facturas:
             self.listarproductos()
             modulos.limpiarDetalle(self)
             self.listaV.clear()
-            self.listarventas2(self.scodigo)
-            self.listarventas()
+            self.listarventas2(self.factura)
         else:
             print("No puedes dejar campos vacios....")
             
