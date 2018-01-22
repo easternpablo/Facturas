@@ -171,6 +171,15 @@ def listarVentasConcreta(numfactura):
     except:
         print("Fallo durante el listado de las ventas....")
         conexion.rollback()
+        
+def listarClientesConcreto(dni):
+    try:
+        cursor.execute(" select * from Cliente where Id_Cliente=?",(dni,))
+        resultado = cursor.fetchall()
+        return resultado
+    except:
+        print("Fallo durante el listado de los clientes....")
+        conexion.rollback()
     
 #def eliminarFac(codigo):
 #    try:

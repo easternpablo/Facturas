@@ -2,6 +2,7 @@ import os
 import time
 import modulos
 import conexion
+import facturapdf
 os.environ['UBUNTU_MENUPROXY']='0'
 import gi
 gi.require_version('Gtk','3.0')
@@ -85,7 +86,7 @@ class Facturas:
     def formarPDF(self, widget):
         self.numFactura = self.etiquetaCod.get_text()
         self.dniCliente = self.entCliente.get_text()
-        PDF.getFactura(self.numFactura, self.dniCliente)
+        facturapdf.crearPDF(self.numFactura, self.dniCliente)
     
     ## OPERACIONES CLIENTES ( INSERTAR, MODIFICAR, ELIMINAR, SELECCIONAR ) 
     
