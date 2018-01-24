@@ -6,7 +6,6 @@ import conexion
 def crearPDF(factura,cliente):
     
     class PDF(FPDF):
-
         ## CABECERA DE LA FACTURA
         def header(self):
             self.image('factura.png', 15, 8, 20)
@@ -26,7 +25,7 @@ def crearPDF(factura,cliente):
             self.set_font('Arial', 'UI', 8)
             self.cell(0 ,6 ,"NIF: B0000000", 0, 0, 'C')
 
-    
+    ## MUESTRA LA FACTURA COMPLETA
     pdf = PDF('P', 'mm', 'A4')
     pdf.alias_nb_pages()
     pdf.add_page()
@@ -36,6 +35,7 @@ def crearPDF(factura,cliente):
     detallesCliente = conexion.listarClientesConcreto(cliente)
     ## MUESTRA TODOS LOS DATOS DEL CLIENTE
     for row in detallesCliente:
+        print row
         pdf.cell(0,8,"DATOS CLIENTE", 0, 1, 'R')
         pdf.cell(0,8,"DNI/CIF : " + str(row[0]), 0,1,'R')
         pdf.cell(0,8,"NOMBRE:" + str(row[2]) + " " + str(row[1]), 0,1,'R')
@@ -45,9 +45,8 @@ def crearPDF(factura,cliente):
     cabecera = "Producto           Cantidad           Precio Unitario          Precio Total"
     pdf.cell(0,40,cabecera,0,1,'C')
     pdf.line(164,50,200,50)
-    
-    
-    
+
+
     pdf = PDF()
     archivo = 'factura.pdf'
     pdf.output(archivo, 'F')
