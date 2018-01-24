@@ -34,14 +34,15 @@ def crearPDF(factura,cliente):
     pdf.cell(0,8,"Factura : " + str(factura), 0, 1, 'C')
     detallesVenta = conexion.listarVentasConcreta(factura)
     detallesCliente = conexion.listarClientesConcreto(cliente)
+    ## MUESTRA TODOS LOS DATOS DEL CLIENTE
     for row in detallesCliente:
         pdf.cell(0,8,"DATOS CLIENTE", 0, 1, 'R')
         pdf.cell(0,8,"DNI/CIF : " + str(row[0]), 0,1,'R')
         pdf.cell(0,8,"NOMBRE:" + str(row[2]) + " " + str(row[1]), 0,1,'R')
         pdf.cell(0,8,"DIRECCION : " + str(row[3]),0,1,'R')
         pdf.cell(0,8,"TELÉFONO : " + str(row[4]) + "     MAIL: " +str(row[5]), 0,1,'R')
-        
-    cabecera = "Producto           Cantidad          Precio Unitario         Precio Total"
+    ## MUESTRA EL DETALLE DE LAS VENTAS    
+    cabecera = "Producto           Cantidad           Precio Unitario          Precio Total"
     pdf.cell(0,40,cabecera,0,1,'C')
     pdf.line(164,50,200,50)
     
