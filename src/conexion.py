@@ -180,7 +180,17 @@ def listarClientesConcreto(dni):
     except:
         print("Fallo durante el listado de los clientes....")
         conexion.rollback()
-    
+        
+def verProd(codigo):
+    try:
+        cursor.execute(" select Nombre from Producto where Id_Producto=?",(codigo,))
+        referencia = cursor.fetchone()
+        conexion.commit()
+        nombre = referencia[0]
+        return nombre
+    except:
+        print("Fallo durante el listado del producto....")
+        conexion.rollback()
 #def eliminarFac(codigo):
 #    try:
 #        cursor.execute(" delete from Factura where Num_Factura=?",(codigo,))
