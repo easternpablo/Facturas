@@ -3,7 +3,6 @@ from fpdf import FPDF
 import os
 import conexion
 
-
 def crearPDF(factura,cliente):
     
     class PDF(FPDF):
