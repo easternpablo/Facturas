@@ -35,9 +35,9 @@ def crearPDF(factura,cliente):
     detallesVenta = conexion.listarVentasConcreta(factura)
     detallesCliente = conexion.listarClientesConcreto(cliente)
     for row in detallesCliente:
-        pdf.cell(0,8, "DATOS CLIENTE", 0, 1, 'R')
-        pdf.cell(0,8,"DNI/CIF :" + str(row[0]), 0,1,'R')
-        pdf.cell(0,8, "NOMBRE:" + str(row[2]) + " " + str(row[1]), 0,1,'R')
+        pdf.cell(0,8,"DATOS CLIENTE", 0, 1, 'R')
+        pdf.cell(0,8,"DNI/CIF : " + str(row[0]), 0,1,'R')
+        pdf.cell(0,8,"NOMBRE:" + str(row[2]) + " " + str(row[1]), 0,1,'R')
         pdf.cell(0,8,"DIRECCION : " + str(row[3]),0,1,'R')
         pdf.cell(0,8,"TELÉFONO : " + str(row[4]) + "     MAIL: " +str(row[5]), 0,1,'R')
 
