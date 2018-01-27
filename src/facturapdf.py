@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
 from fpdf import FPDF
 import os
 import conexion
 
- 
 class PDF(FPDF):
     ## CABECERA DE LA FACTURA
     def header(self):
@@ -25,8 +23,7 @@ class PDF(FPDF):
         self.cell(0 ,6 ,"NIF: B0000000", 0, 0, 'C')
     
 ## MUESTRA LA FACTURA COMPLETA
-def crearPDF(factura,cliente):   
-    print factura
+def crearPDF(factura,cliente):
     pdf = PDF('P', 'mm', 'A4')
     pdf.alias_nb_pages()
     pdf.add_page()
@@ -50,7 +47,6 @@ def crearPDF(factura,cliente):
     pdf.line(20,106,190,106)
     suma = 0
     iva = 0.21
-    cuotaIVA = 0
     total = 0
     y = 110
     for item in detallesVenta:
@@ -67,7 +63,22 @@ def crearPDF(factura,cliente):
         pdf.text(x,y,"  |  " + str(precio))
         x = x + 55
         pdf.text(x,y,"  |  " + str(subtotal))
+        x = x + 15
+        pdf.text(x,y,"  |  " )
+        y = y + 5
+        suma = suma + subtotal
     
+    iva = suma * 0.21
+    total = iva + suma
+    suma = "{0:.2f}".format(suma)
+    iva = "{0:.2f}".format(iva)
+    total = "{0:.2f}".format(total)
+    pdf.ln(70)
+    pdf.set_font('Arial','B',10)
+    lineaTotal = "Suma de conceptos                      IVA %              Cuota IVA                    Importe Total"
+    pdf.cell(0,7,lineaTotal,1,1, 'C')
+    pdf.text(115,210,str(iva) + " Euros")
+    pdf.text(155,210, str(total) + " Euros" )
    
     archivo = 'factura.pdf'
     pdf.output(archivo, 'F')
