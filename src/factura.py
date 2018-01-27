@@ -55,6 +55,8 @@ class Facturas:
         self.vistaV = b.get_object("vistadetalles")
         ## OTROS WIDGETS
         self.comboproducto = b.get_object("cmbproducto")
+        #self.imagen = b.get_object("imagen")
+        #self.dlgimg = b.get_object("filechooser")
         ## DICCIONARIO CON EVENTOS
         dic = {"on_window1_destroy": self.cerrar,
                "on_btninsert_clicked": self.insertarC,
