@@ -86,7 +86,7 @@ class Facturas:
     def formarPDF(self, widget):
         self.numFactura = self.etiquetaCod.get_text()
         self.dniCliente = self.entCliente.get_text()
-        facturapdf.crearPDF(self.numFactura, self.dniCliente)
+        pdf.crearPDF(self.numFactura, self.dniCliente)
     
     ## OPERACIONES CLIENTES ( INSERTAR, MODIFICAR, ELIMINAR, SELECCIONAR ) 
     
