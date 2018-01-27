@@ -1,8 +1,8 @@
-import os
-import time
-import modulos
 import conexion
-import facturapdf
+import modulos
+import os
+import pdf
+import time
 os.environ['UBUNTU_MENUPROXY']='0'
 import gi
 gi.require_version('Gtk','3.0')
