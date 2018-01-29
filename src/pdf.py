@@ -41,7 +41,7 @@ def crearPDF(factura,cliente):
         pdf.cell(0,8,"DIRECCION:  " + str(row[3]),0,1,'R')
         pdf.cell(0,8,"TELEFONO:  " + str(row[4]) + "  -  MAIL: " +str(row[5]), 0,1,'R')
     ## MUESTRA EL DETALLE DE LAS VENTAS    
-    cabecera = "Producto           Cantidad           Precio Unitario           Precio Total"
+    cabecera = "Producto            Cantidad            Precio Unitario            Precio Total"
     pdf.cell(0,40,cabecera,0,1,'C')
     pdf.line(164,50,200,50)
     pdf.line(20,100,190,100)
@@ -51,6 +51,7 @@ def crearPDF(factura,cliente):
     total = 0
     y = 110
     for item in detallesVenta:
+        print item
         pdf.set_font('Arial','',10)
         prodnom = conexion.verProd(str(item[2]))
         cantidad = "{0:.2f}".format(float(item[3]))
