@@ -284,8 +284,7 @@ class Facturas:
             self.listarventas2(self.factura)
         else:
             print("No tienes ningun detalle seleccionado")
-            
-            
+                 
     def listarventas(self):
         resultado = conexion.listarVen()  
         for registroV in resultado:
