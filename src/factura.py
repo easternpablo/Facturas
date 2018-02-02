@@ -17,6 +17,7 @@ class Facturas:
         self.ventana = b.get_object("window1")
         self.etiquetaCod = b.get_object("lblnumfactura")
         self.etiquetaPrecio = b.get_object("lblprecio")
+        self.informeStock = b.get_object("lblinformestock")
         ## CAMPOS DE TEXTOS
         self.entDni = b.get_object("entrydni")
         self.entName = b.get_object("entryname")
@@ -252,12 +253,12 @@ class Facturas:
         self.precioFinal = float(self.cantidad)*float(self.precioUnidad)
         fila = (self.scodigo,self.codProd,self.cantidad,self.precioUnidad,self.precioFinal)
         if self.scodigo != '' and self.cantidad != '':
-            conexion.insertarVent(fila)
             self.stockObtenido = conexion.cogerStock(self.producto[0])
             self.newStock = int(self.stockObtenido)-int(self.cantidad)
-            if self.newStock <= 0:
-                print(">> No hay stock de ese producto")
+            if int(self.stockObtenido) <= 0:
+                self.informeStock.set_text("No hay stock de ese producto , no puedes comprarlo")
             else:
+                conexion.insertarVent(fila)
                 conexion.actualizarStock(self.newStock,self.codProd)
                 self.listaP.clear()
                 self.listarproductos()
