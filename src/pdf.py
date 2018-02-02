@@ -79,8 +79,8 @@ def crearPDF(factura,cliente):
     pdf.set_font('Arial','B',10)
     lineaTotal = "Suma de conceptos                      IVA %              Cuota IVA                    Importe Total"
     pdf.cell(0,7,lineaTotal,1,1, 'C')
-    pdf.text(115,210,str(iva) + " Euros")
-    pdf.text(155,210, str(total) + " Euros" )
+    pdf.text(133,213,str(iva) + " Euros")
+    pdf.text(175,213, str(total) + " Euros" )
    
     archivo = 'factura.pdf'
     pdf.output(archivo, 'F')

@@ -255,12 +255,15 @@ class Facturas:
             conexion.insertarVent(fila)
             self.stockObtenido = conexion.cogerStock(self.producto[0])
             self.newStock = int(self.stockObtenido)-int(self.cantidad)
-            conexion.actualizarStock(self.newStock,self.codProd)
-            self.listaP.clear()
-            self.listarproductos()
-            modulos.limpiarDetalle(self)
-            self.listaV.clear()
-            self.listarventas2(self.factura)
+            if self.newStock <= 0:
+                print(">> No hay stock de ese producto")
+            else:
+                conexion.actualizarStock(self.newStock,self.codProd)
+                self.listaP.clear()
+                self.listarproductos()
+                modulos.limpiarDetalle(self)
+                self.listaV.clear()
+                self.listarventas2(self.factura)
         else:
             print("No puedes dejar campos vacios....")
             
