@@ -42,6 +42,7 @@ class Facturas:
         self.iniV = b.get_object("btnstartV")
         self.finV = b.get_object("btnfinishV")
         self.agregarV = b.get_object("btnagregarcarrito")
+        self.eliminarV = b.get_object("btneliminarcarrito")
         self.imprimir = b.get_object("btnprint")
         ## LISTAS
         self.listaC = b.get_object("listaclientes")
@@ -70,12 +71,14 @@ class Facturas:
                "on_btnsalir2_clicked": self.cerrar,
                "on_btnstartV_clicked": self.agregarFactura,
                "on_btnagregarcarrito_clicked": self.agregarVenta,
+               "on_btneliminarcarrito_clicked": self.eliminarVenta,
                "on_btnprint_clicked": self.formarPDF,
 #              "on_btnfinishV_clicked": self.eliminarFactura,
                "on_cmbproducto_changed": self.selectProd,
                "on_vistaclientes_cursor_changed": self.selectC,
                "on_vistaproductos_cursor_changed": self.selectP,
-               "on_vistafacturas_cursor_changed": self.selectF,}
+               "on_vistafacturas_cursor_changed": self.selectF,
+               "on_vistadetalles_cursor_changed": self.selectV,}
         b.connect_signals(dic)
         self.ventana.show_all()
         self.listarclientes()
@@ -268,10 +271,40 @@ class Facturas:
         else:
             print("No puedes dejar campos vacios....")
             
+    def eliminarVenta(self, widget):
+        self.codProd = conexion.cogerCodigo(self.producto[0])
+        if self.sdetalle != '':
+            conexion.eliminarVent(sdetalle)
+            self.stockObtenido = conexion.cogerStock(self.producto[0])
+            self.newStock = int(self.stockObtenido)-int(self.scant)
+            conexion.actualizarStock(self.newStock,self.sprod)
+            self.listaP.clear()
+            self.listarproductos()
+            modulos.limpiarDetalle(self)
+            self.listaV.clear()
+            self.listarventas2(self.factura)
+        else:
+            print("No tienes ningun detalle seleccionado")
+            
+            
     def listarventas(self):
         resultado = conexion.listarVen()  
         for registroV in resultado:
             self.listaV.append(registroV)
+            
+    def selectV(self, widget):
+        model, iter = self.vistaV.get_selection().get_selected()
+        if iter != None:
+            self.sdetalle = model.get_value(iter, 0)
+            scodigo = model.get_value(iter, 1)
+            self.sprod = model.get_value(iter, 2)
+            scant = model.get_value(iter, 3)
+            sprecioU = model.get_value(iter, 4)
+            self.etiquetaCod.set_text(str(scodigo))
+            self.entCantidad.set_text(scant)
+            self.etiquetaPrecio.set_text(str(sprecioU))
+            self.listaV.clear()
+            self.listarventas2(scodigo)
             
     def listarventas2(self,factura):
         resultado = conexion.listarVentasConcreta(factura)  

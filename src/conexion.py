@@ -145,6 +145,15 @@ def insertarVent(registro):
         print("Fallo durante la insercion de una venta....")
         conexion.rollback()
         
+def eliminarVent(detalle):
+    try:
+        cursor.execute(" delete from Venta where Num_Detalle=?",(detalle,))
+        conexion.commit()
+        print(">> Venta eliminada")
+    except:
+        print("Fallo durante la eliminacion de una venta....")
+        conexion.rollback()
+        
 def actualizarStock(stock,codigo):
     try:
         cursor.execute(" update Producto set Stock=? where Id_Producto=?",(stock,codigo))
