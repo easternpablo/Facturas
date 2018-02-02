@@ -272,9 +272,8 @@ class Facturas:
             print("No puedes dejar campos vacios....")
             
     def eliminarVenta(self, widget):
-        self.codProd = conexion.cogerCodigo(self.producto[0])
         if self.sdetalle != '':
-            conexion.eliminarVent(sdetalle)
+            conexion.eliminarVent(self.sdetalle)
             self.stockObtenido = conexion.cogerStock(self.producto[0])
             self.newStock = int(self.stockObtenido)-int(self.scant)
             conexion.actualizarStock(self.newStock,self.sprod)
@@ -301,7 +300,7 @@ class Facturas:
             scant = model.get_value(iter, 3)
             sprecioU = model.get_value(iter, 4)
             self.etiquetaCod.set_text(str(scodigo))
-            self.entCantidad.set_text(scant)
+            self.entCantidad.set_text(str(scant))
             self.etiquetaPrecio.set_text(str(sprecioU))
             self.listaV.clear()
             self.listarventas2(scodigo)
