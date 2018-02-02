@@ -41,8 +41,8 @@ def crearPDF(factura,cliente):
         pdf.cell(0,8,"DIRECCION:  " + str(row[3]),0,1,'R')
         pdf.cell(0,8,"TELEFONO:  " + str(row[4]) + "  -  MAIL: " +str(row[5]), 0,1,'R')
     ## MUESTRA EL DETALLE DE LAS VENTAS    
-    cabecera = "Producto            Cantidad            Precio Unitario            Precio Total"
-    pdf.cell(0,40,cabecera,0,1,'C')
+    cabecera = "Producto              Cantidad              Precio Unitario               Precio Total"
+    pdf.cell(0,10,cabecera,0,1,'C')
     pdf.line(164,50,200,50)
     pdf.line(20,100,190,100)
     pdf.line(20,106,190,106)
@@ -79,8 +79,8 @@ def crearPDF(factura,cliente):
     pdf.set_font('Arial','B',10)
     lineaTotal = "Suma de conceptos                      IVA %              Cuota IVA                    Importe Total"
     pdf.cell(0,7,lineaTotal,1,1, 'C')
-    pdf.text(133,213,str(iva) + " Euros")
-    pdf.text(175,213, str(total) + " Euros" )
+    pdf.text(133,183,str(iva) + " Euros")
+    pdf.text(175,183, str(total) + " Euros" )
    
     archivo = 'factura.pdf'
     pdf.output(archivo, 'F')
