@@ -1,7 +1,7 @@
 import conexion
 import modulos
 import os
-#import pdf
+import pdf
 import time
 os.environ['UBUNTU_MENUPROXY']='0'
 import gi
