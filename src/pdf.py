@@ -2,7 +2,6 @@ from fpdf import FPDF
 import os
 import conexion
 
-
 class PDF(FPDF):
     ## CABECERA DE LA FACTURA
     def header(self):
