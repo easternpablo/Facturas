@@ -124,6 +124,17 @@ def cogerStock(producto):
     except:
         print("Hubo problemas al seleccionar un producto....")
         conexion.rollback
+        
+def cogerStock2(producto):
+    try:
+        cursor.execute("select Stock from Producto where Id_Producto=?",(producto,))
+        referencia = cursor.fetchone()
+        conexion.commit()
+        stock = referencia[0]
+        return stock
+    except:
+        print("Hubo problemas al seleccionar un producto....")
+        conexion.rollback
 
 ## OPERACIONES VENTAS
         

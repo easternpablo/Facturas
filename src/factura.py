@@ -1,7 +1,7 @@
 import conexion
 import modulos
 import os
-import pdf
+#import pdf
 import time
 os.environ['UBUNTU_MENUPROXY']='0'
 import gi
@@ -272,16 +272,17 @@ class Facturas:
             print("No puedes dejar campos vacios....")
             
     def eliminarVenta(self, widget):
+        self.cantidad = self.entCantidad.get_text()
         if self.sdetalle != '':
             conexion.eliminarVent(self.sdetalle)
-            self.stockObtenido = conexion.cogerStock(self.producto[0])
-            self.newStock = int(self.stockObtenido)-int(self.scant)
+            self.stockObtenido = conexion.cogerStock2(self.sprod)
+            self.newStock = int(self.stockObtenido)+int(self.cantidad)
             conexion.actualizarStock(self.newStock,self.sprod)
             self.listaP.clear()
             self.listarproductos()
-            modulos.limpiarDetalle(self)
             self.listaV.clear()
-            self.listarventas2(self.factura)
+            self.listarventas2(self.sfactura)
+            modulos.limpiarDetalle(self)
         else:
             print("No tienes ningun detalle seleccionado")
                  
@@ -294,15 +295,13 @@ class Facturas:
         model, iter = self.vistaV.get_selection().get_selected()
         if iter != None:
             self.sdetalle = model.get_value(iter, 0)
-            scodigo = model.get_value(iter, 1)
+            self.sfactura = model.get_value(iter, 1)
             self.sprod = model.get_value(iter, 2)
             scant = model.get_value(iter, 3)
             sprecioU = model.get_value(iter, 4)
-            self.etiquetaCod.set_text(str(scodigo))
+            self.etiquetaCod.set_text(str(self.sfactura))
             self.entCantidad.set_text(str(scant))
             self.etiquetaPrecio.set_text(str(sprecioU))
-            self.listaV.clear()
-            self.listarventas2(scodigo)
             
     def listarventas2(self,factura):
         resultado = conexion.listarVentasConcreta(factura)  
