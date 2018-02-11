@@ -2,6 +2,8 @@ import conexion
 import modulos
 import os
 import pdf
+import pdfCliente
+import pdfProducto
 import time
 os.environ['UBUNTU_MENUPROXY']='0'
 import gi
@@ -44,6 +46,8 @@ class Facturas:
         self.agregarV = b.get_object("btnagregarcarrito")
         self.eliminarV = b.get_object("btneliminarcarrito")
         self.imprimir = b.get_object("btnprint")
+        self.informeCli = b.get_object("btninformecli")
+        self.informeProd = b.get_object("btninformeprod")
         ## LISTAS
         self.listaC = b.get_object("listaclientes")
         self.listaP = b.get_object("listaproductos")
@@ -73,6 +77,8 @@ class Facturas:
                "on_btnagregarcarrito_clicked": self.agregarVenta,
                "on_btneliminarcarrito_clicked": self.eliminarVenta,
                "on_btnprint_clicked": self.formarPDF,
+               "on_btninformecli_clicked": self.formarPDFCli,
+               "on_btninformeprod_clicked": self.formarPDFProd,
 #              "on_btnfinishV_clicked": self.eliminarFactura,
                "on_cmbproducto_changed": self.selectProd,
                "on_vistaclientes_cursor_changed": self.selectC,
@@ -88,6 +94,12 @@ class Facturas:
         
     def cerrar(self, widget):
         Gtk.main_quit()
+        
+    def formarPDFCli(self, widget):
+        self.pdfCliente.crearPDF()
+        
+    def formarPDFProd(self, widget):
+        self.pdfProducto.crearPDF()
         
     def formarPDF(self, widget):
         self.numFactura = self.etiquetaCod.get_text()
