@@ -96,10 +96,10 @@ class Facturas:
         Gtk.main_quit()
         
     def formarPDFCli(self, widget):
-        self.pdfCliente.crearPDF()
+        pdfCliente.crearPDF()
         
     def formarPDFProd(self, widget):
-        self.pdfProducto.crearPDF()
+        pdfProducto.crearPDF()
         
     def formarPDF(self, widget):
         self.numFactura = self.etiquetaCod.get_text()

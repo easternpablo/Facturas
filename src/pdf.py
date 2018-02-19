@@ -57,7 +57,7 @@ def crearPDF(factura,cliente):
         precio = float(item[4])
         subtotal = float(item[5])
         x = 20
-        pdf.text(x,y,"  |  " + str(prodnom[0]))
+        pdf.text(x,y,"  |  " + prodnom)
         x = x + 50
         pdf.text(x,y,"  |  " + str(cantidad))
         x = x + 40
