@@ -11,7 +11,7 @@ gi.require_version('Gtk','3.0')
 from gi.repository import Gtk
 
 class Facturas:
-    
+    """LISTADO DE TODOS LOS WIDGETS DE LA APLICACION"""
     def __init__(self):
         b = Gtk.Builder()
         b.add_from_file("ventana.glade")
@@ -94,20 +94,20 @@ class Facturas:
         
     def cerrar(self, widget):
         Gtk.main_quit()
-        
+    """Este metodo hace un informe de todos los clientes."""  
     def formarPDFCli(self, widget):
         pdfCliente.crearPDF()
-        
+    """Este metodo hace un informe de todos los productos."""   
     def formarPDFProd(self, widget):
         pdfProducto.crearPDF()
-        
+    """Este metodo coge el numero de factura y el dni del cliente para listar los datos de dicho cliente junto a su factura."""   
     def formarPDF(self, widget):
         self.numFactura = self.etiquetaCod.get_text()
         self.dniCliente = self.entCliente.get_text()
         pdf.crearPDF(self.numFactura, self.dniCliente)
     
     ## OPERACIONES CLIENTES ( INSERTAR, MODIFICAR, ELIMINAR, SELECCIONAR ) 
-    
+    """Metodo que inserta clientes."""
     def insertarC(self, widget, data = None):
         self.dni = self.entDni.get_text()
         self.nombre = self.entName.get_text()
@@ -123,8 +123,8 @@ class Facturas:
             self.listarclientes()
         else:
             print("No puedes dejar campos vacios...")
-            
-    def borrarC(self, widget, data = None):
+    """Metodo que borra clientes."""       
+    def borrarC(self, widget, data = None): 
         self.dni = self.entDni.get_text()
         if self.dni != '':
             conexion.eliminarCli(self.dni)
@@ -133,8 +133,8 @@ class Facturas:
             self.listarclientes()
         else:
             print("No puedes dejar el campo dni vacio...")
-            
-    def modificarC(self, widget, data = None):
+    """Metodo que modifica clientes."""       
+    def modificarC(self, widget, data = None): 
         self.dni = self.entDni.get_text()
         self.nombre = self.entName.get_text()
         self.apellidos = self.entApellidos.get_text()
@@ -145,7 +145,7 @@ class Facturas:
             conexion.modificarCli(self.dni,self.nombre,self.apellidos,self.direccion,self.telefono,self.email)
             self.listaC.clear()
             self.listarclientes()
-            
+    """Metodo que seleccionando un cliente muestre sus datos en cada uno de los campos."""        
     def selectC(self, widget):
         model, iter = self.vistaC.get_selection().get_selected()
         if iter != None:
@@ -162,14 +162,14 @@ class Facturas:
             self.entTelefono.set_text(str(stelefono))
             self.entEmail.set_text(semail)
             self.entCliente.set_text(sdni)
-         
-    def listarclientes(self):
+    """Metodo que lista todos los clientes en la tabla."""   
+    def listarclientes(self):  
         resultado = conexion.listarCli()
         for registroC in resultado:
             self.listaC.append(registroC)
             
     ## OPERACIONES PRODUCTOS ( INSERTAR, MODIFICAR, ELIMINAR, SELECCIONAR )
-    
+    """Metodo que inserta productos."""
     def insertarP(self, widget, data = None):
         self.producto = self.entProd.get_text()
         self.precio = self.entPrecio.get_text()
@@ -182,8 +182,8 @@ class Facturas:
             self.listarproductos()
         else:
             print("No puedes dejar campos vacios...")
-            
-    def borrarP(self, widget, data = None):
+    """Metodo que borra productos"""
+    def borrarP(self, widget, data = None): 
         if self.scodigoP != '':
             conexion.eliminarPro(self.scodigoP)
             modulos.limpiarProductos(self)
@@ -191,7 +191,7 @@ class Facturas:
             self.listarproductos()
         else:
             print("Tienes que seleccionar el producto a eliminar")
-            
+    """Metodo que modifica productos."""       
     def modificarP(self, widget, data = None):
         self.producto = self.entProd.get_text()
         self.precio = self.entPrecio.get_text()
@@ -200,7 +200,7 @@ class Facturas:
             conexion.modificarPro(self.scodigoP,self.producto,self.precio,self.stock)
             self.listaP.clear()
             self.listarproductos()
-            
+    """Metodo que seleccionando un producto muestre sus datos en cada uno de los campos."""       
     def selectP(self, widget):
         model, iter = self.vistaP.get_selection().get_selected()
         if iter != None:
@@ -211,26 +211,26 @@ class Facturas:
             self.entProd.set_text(sproducto)
             self.entPrecio.set_text(str(sprecio))
             self.entStock.set_text(str(sstock))
-            
+    """Metodo que lista todos los productos en la tabla."""       
     def listarproductos(self):
         resultado = conexion.listarPro()
         for registroP in resultado:
             self.listaP.append(registroP)
             
     ## OPERACIONES FACTURACION
-    
+    """Metodo que carga el nombre de los productos de la base de datos en un combobox."""
     def cargarProductos(self, widget):
         lista = conexion.productos()
         for row in lista:
             self.listaP2.append(row)
-            
+    """Metodo que recoge el precio de un determinado producto y lo muestra."""        
     def selectProd(self, widget):
         index = self.comboproducto.get_active()
         model = self.comboproducto.get_model()
         self.producto = model[index]
         precio = conexion.cogerPrecio(self.producto[0])
         self.etiquetaPrecio.set_text(str(precio))
-        
+    """Metodo que agrega a un determinado cliente una factura."""   
     def agregarFactura(self, widget):
         self.cliente = self.entCliente.get_text()
         self.fecha = time.strftime("%d/%m/%y")
@@ -241,7 +241,7 @@ class Facturas:
             self.listarfacturas()
         else:
             print("No puedes dejar el campo cliente vacio...")
-            
+    """Metodo que seleccionando una factura muestre sus datos en cada uno de los campos ademas de mostrar de esa factura sus detalles."""      
     def selectF(self, widget):
         model, iter = self.vistaF.get_selection().get_selected()
         if iter != None:
@@ -253,14 +253,15 @@ class Facturas:
             self.listaV.clear()
             self.listarventas2(self.scodigo)
             
+    """Metodo que lista todas las facturas en la tabla."""       
     def listarfacturas(self):
         resultado = conexion.listarFac()
         for registroF in resultado:
             self.listaF.append(registroF)
             
     ## OPERACIONES VENTA
-            
-    def agregarVenta(self, widget):
+    """Metodo que inserta una nuevo detalle a la factura."""     
+    def agregarVenta(self, widget): 
         self.factura = self.etiquetaCod.get_text()
         self.codProd = conexion.cogerCodigo(self.producto[0])
         self.cantidad = self.entCantidad.get_text()
@@ -282,7 +283,7 @@ class Facturas:
                 self.listarventas2(self.factura)
         else:
             print("No puedes dejar campos vacios....")
-            
+    """Metodo que elimina un detalle a la factura."""         
     def eliminarVenta(self, widget):
         self.cantidad = self.entCantidad.get_text()
         if self.sdetalle != '':
@@ -302,7 +303,7 @@ class Facturas:
         resultado = conexion.listarVen()  
         for registroV in resultado:
             self.listaV.append(registroV)
-            
+    """Metodo que selecciona un detalle de la factura y muestra datos en los campos."""          
     def selectV(self, widget):
         model, iter = self.vistaV.get_selection().get_selected()
         if iter != None:
@@ -315,6 +316,7 @@ class Facturas:
             self.entCantidad.set_text(str(scant))
             self.etiquetaPrecio.set_text(str(sprecioU))
             
+    """Metodo que lista todos los detalles de una determinada factura."""          
     def listarventas2(self,factura):
         resultado = conexion.listarVentasConcreta(factura)  
         for registroV in resultado:
